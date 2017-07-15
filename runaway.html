@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>runAway</title>
+</head>
+<body>
+
+<div id="one"> 
+
+</div>
+
+<div id="player1">
+	
+
+</div>
+
+<div id="player2">
+	
+ 
+
+
+</div>
+
+
+<span id="p1score"></span>
+
+<span id="p2score"></span>
+
+<img src="images/source.gif">
+
+
+
+
+	
+
+
+<style type="text/css">
+
+  *{
+  	padding: 0;
+  	margin: 0;
+  }
+
+
+
+
+
+	#one {
+
+			width: 50px;
+	height: 50px;
+		border-radius: 25px;
+	
+	background-image: radial-gradient(blue,green,black,yellow,red,darkblue);
+	background-repeat: no-repeat, no-repeat;
+	
+	position:fixed;
+	}
+
+	#player1 {
+		position: fixed;
+		width: 25px;
+		height: 150px;
+		background-image: radial-gradient(#AA076B,#61045F); 
+		border-radius: 25px;
+	}
+
+	#player2 {
+		position: fixed;
+		width: 25px;
+		height: 150px;
+		background-image: radial-gradient(#3CA55C,#B5AC49);
+		border-radius: 25px;
+	}
+
+	#p1score{
+		position: fixed;
+		width: 100px;
+		height: 50px;
+		background-color: blue;
+		top: 0px;
+		left: 0px;
+		opacity: 0.6;
+		
+
+	}
+
+	#p2score{
+		position: fixed;
+		width: 100px;
+		height: 50px;
+		background-color: violet;
+		top: 0px;
+		right: 0px;
+		opacity: 0.6;
+
+
+	}
+
+	img{
+
+		width: 100vw;
+		 height: 100vh;
+    
+	}
+
+
+	
+
+
+  body {
+  	height: 100vh;
+  	width: 100vw;
+  }
+
+
+
+</style>
+
+
+<script type="text/javascript">
+
+	function getEBI(id) {
+		return document.getElementById(id);
+	}
+
+
+
+	var element = getEBI('one');
+
+	var p1 = getEBI('player1');
+
+	
+
+
+	var p2 = getEBI('player2');
+
+	var r1 = getEBI('p1score');
+
+	var r2 = getEBI('p2score');
+ 
+	p1.style.top = '250px';
+	p1.style.left= '0px';
+
+	p2.style.top = '250px';
+	p2.style.right= '0px';
+
+	element.style.top = '250px';
+	element.style.left = '600px';
+
+	
+	var number;
+
+
+           var s1=0;
+            var s2=0;
+
+            r1.innerText = "Score : " + s1;
+            r2.innerText = "Score : " +s2;
+
+            r1.style.color = "white";
+            r1.style["padding-left"] = "30px";
+            r1.style["padding-top"] = "10px";
+            r1.style["font-size"]= "20px";
+
+             r2.style.color = "white";
+            r2.style["padding-left"] = "30px";
+            r2.style["padding-top"] = "10px";
+            r2.style["font-size"]= "20px";
+
+
+		var maxWidth = document.body.clientWidth ; 
+		var maxHeight = document.body.clientHeight ;
+
+
+			document.body.addEventListener('keydown',function(event){
+
+
+		if(event.key == 'ArrowDown')
+		{
+
+        if((parseFloat(p1.style.top.slice(0,-2)) + 150) < maxHeight) {
+             
+             
+
+
+			p1.style.top = (parseFloat(p1.style.top.slice(0,-2)) + 10 ) + 'px';
+
+		}
+}
+
+		if(event.key == 'ArrowUp'){
+          
+          if((parseFloat(p1.style.top.slice(0,-2))) > 0 ) {
+           
+			p1.style.top = (parseFloat(p1.style.top.slice(0,-2)) - 10 ) + 'px';
+
+		}
+
+		}
+
+
+		if(event.key == 's')
+		{
+
+
+        if((parseFloat(p2.style.top.slice(0,-2)) + 150) < maxHeight) {
+             
+             
+
+
+			p2.style.top = (parseFloat(p2.style.top.slice(0,-2)) + 10 ) + 'px';
+
+		}
+}
+
+		if(event.key == "w"){
+          
+          if((parseFloat(p2.style.top.slice(0,-2))) > 0 ) {
+           
+			p2.style.top = (parseFloat(p2.style.top.slice(0,-2)) - 10 ) + 'px';
+
+		}
+
+		}
+
+
+
+
+	}); 
+
+
+	element.addEventListener('mouseover' , function(event){
+        
+        console.log(event);
+
+	
+
+
+		var oldTop = parseFloat(element.style.top.slice(0,-2));
+	    var oldLeft = parseFloat(element.style.left.slice(0,-2));
+
+		
+
+		var newLeft = Math.random() * maxWidth -50 ;
+		var newTop = Math.random() * maxHeight - 50 ;
+
+
+
+        var deltaLeft = ( newLeft - oldLeft ) / 100;
+		var deltaTop = (newTop - oldTop) / 100 ;
+
+		
+		
+
+		if(number != null){
+		clearInterval(number); //important
+	}
+
+
+
+
+
+          
+        number = setInterval(function(){
+        	var currentTop = parseFloat(element.style.top.slice(0,-2));
+        	var currentLeft = parseFloat(element.style.left.slice(0,-2));
+
+    
+        	        	
+		var mod2 = maxHeight - currentTop;
+
+			 if (mod2 < 51.0) 
+
+         {
+                            
+        	deltaTop = -deltaTop;
+
+         } 
+
+         	 if (mod2 > maxHeight )
+
+         {
+                            
+        	deltaTop = -deltaTop;
+
+         }
+
+
+
+
+         var mod3 = maxWidth - currentLeft ;
+
+         var mod4 = currentTop - ((parseFloat(p1.style.top.slice(0,-2))));
+
+
+               if ( mod4 < 0 )
+               {
+               	mod4 = -1 * mod4;
+               }
+         
+
+         	 if ((mod3 > ( maxWidth - 25)) && mod4 < 120.0  ) 
+
+         {
+                            
+        	deltaLeft = -deltaLeft;
+            
+            s1 = s1 +1;
+        	r1.innerText = "Score :" + s1 ;
+        	
+           
+      var audio = new Audio('mparty8_ballyhoo_08.wav');
+                    audio.play();
+
+
+         } 
+
+         if (mod3 > maxWidth) {
+           alert("Player2 Wins");
+
+         	clearInterval(number);
+         }
+
+
+
+ 
+         var mod5 =  maxWidth - currentLeft;
+
+         var mod6 = currentTop - ((parseFloat(p2.style.top.slice(0,-2))));
+
+             if ( mod6 < 0 )
+               {
+               	mod6 = -1 * mod6;
+               }
+
+               
+         
+
+         	 if (mod5 < 100.1 && mod6 < 120.0 ) 
+
+         {
+                            
+        	deltaLeft = -deltaLeft;
+        	 s2 = s2 +1;
+        	r2.innerText = "Score :"  + s2;
+
+        	
+      var audio = new Audio('mparty8_ballyhoo_08.wav');
+        	 audio.play();
+        	
+
+         } 
+
+         if (mod5 < 50.1) {
+         	
+         {
+         	alert("Player 1 Wins");
+
+
+         	clearInterval(number);
+         }
+         }
+
+         if(s1==10)
+         {
+         	alert("Player 1 Wins");
+
+         	clearInterval(number);
+         }
+
+
+         if(s2==10)
+         {
+         	alert("Player 2 Wins");
+
+         	clearInterval(number);
+         }
+
+
+
+
+
+             	
+
+
+       	element.style.top = currentTop + deltaTop + 'px' ;
+        	element.style.left = currentLeft + deltaLeft + 'px' ;
+
+        
+
+        },5);
+
+
+
+       
+
+	});
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

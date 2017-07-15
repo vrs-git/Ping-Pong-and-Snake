@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Snake</title>
+</head>
+<body>
+
+
+
+<div class="snake" id="head">
+	
+</div>
+
+<div class="snake">
+	
+</div>
+
+<div class="snake">
+	
+</div>
+
+<div class="snake">
+	
+</div>
+
+
+
+<div id="bait">
+
+</div>
+
+<div id="alert"></div>
+
+
+
+
+<style type="text/css">
+	
+	* {
+		padding: 0;
+		margin: 0;
+	}
+
+
+#head {
+	background-color: blue;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+.snake {
+
+	position: fixed;
+	width: 20px;
+	height: 20px;
+	background-color: black;
+	border: 1px solid white;
+}
+
+#bait{
+	position: fixed;
+	width: 15px;
+	height: 15px;
+	border-radius: 5px;
+	background-color: black;
+}
+
+
+
+body {
+	width: 100vw;
+	height: 100vh;
+
+	display: flex;
+	justify-content: flex-start;
+
+
+
+	
+} 
+
+#alert {
+	position: fixed;
+	top: 200px;
+	left: 500px;
+	font-size: 30px;
+	color: red;
+}  
+</style>
+
+<script type="text/javascript">
+	
+	function getEBC(className)
+	{
+		  return document.getElementsByClassName(className);
+	}
+
+	function getEBI(id)
+	{
+		return document.getElementById(id);
+
+	}
+
+	var number;
+	
+	 
+
+		var maxWidth = document.body.clientWidth;
+		var maxHeight = document.body.clientHeight;
+
+		
+
+	var snake = getEBC('snake');
+	var bait = getEBI('bait');
+
+	var alert = getEBI('alert');
+
+	bait.style.top = "0px";
+	bait.style.left = "0px";
+
+	for(var i=0; i<snake.length; i++)
+	{
+		 snake[i].style.top = "100px";
+		 snake[i].style.left = (snake.length - i)*20 + "px" ;
+
+		
+
+
+	}
+
+	var b=1;
+
+	  window.addEventListener('pageshow' , baitMove);
+
+	  console.log(bait.style.top , bait.style.left);
+
+
+	function baitMove() 
+
+	{
+
+		var oldLeft = parseFloat(bait.style.left.slice(0,-2));
+		var oldTop = parseFloat(bait.style.top.slice(0,-2));
+
+		var newTop = Math.random() * maxHeight - 7;
+		var newLeft = Math.random() * maxWidth  - 7 ;
+
+
+		bait.style.top = newTop + "px";
+		bait.style.left = newLeft + "px";
+
+		
+
+	}
+  
+
+	window.addEventListener('keydown' , function(event)
+	{
+		if(number!=null)
+		{
+			clearInterval(number);
+
+			
+				b=0;
+
+
+			
+		}
+
+		
+
+
+	});
+
+	function keyMove(event)
+
+	{     		alert.innerHTML = "<h1>  </h1>";
+
+	          console.log(event);
+
+	          if(event.key == "ArrowDown") 
+            	snakeMove(+20 , -20 , event) ;
+
+			  if(event.key == "ArrowUp") 
+				 snakeMove(-20 , +20 , event ) ;
+
+              
+              if(event.key == "ArrowRight")
+  			  	snakeMove(+20 , -20 , event); 
+
+			  if(event.key == "ArrowLeft")
+			  	snakeMove(-20 , +20 , event);
+
+
+    }
+
+
+
+
+
+
+
+function snakeMove(x , y , event)
+
+{
+
+	
+				  number = setInterval(function(){
+
+                  if((event.key == "ArrowDown" )|| (event.key == "ArrowUp"))
+
+					snake[0].style.top = parseFloat(snake[0].style.top.slice(0,-2)) + x +"px";
+ 
+                   else
+
+                   	snake[0].style.left = parseFloat(snake[0].style.left.slice(0,-2)) + x +"px";
+                  
+                
+	              for(var i=snake.length-1; i>0; i--)
+
+	      {        	if((event.key == "ArrowDown" )|| (event.key == "ArrowUp"))
+			
+			  snake[i].style.left =  parseFloat(snake[i-1].style.left.slice(0,-2)) + "px";
+
+			else
+
+				snake[i].style.top =  parseFloat(snake[i-1].style.top.slice(0,-2)) + "px";
+
+
+		}
+		  
+             if (b<snake.length-1) 
+               b++;
+
+              else
+              				
+              b=snake.length;
+
+            for(var i=1; i<b; i++) 
+            {
+
+            if((event.key == "ArrowDown" )|| (event.key == "ArrowUp")) 
+          	snake[i].style.top = parseFloat(snake[i-1].style.top.slice(0,-2)) + y +"px";
+
+          else
+
+              	snake[i].style.left = parseFloat(snake[i-1].style.left.slice(0,-2)) + y +"px";
+
+          }
+
+                 
+			
+                   touchOrNot(parseFloat(snake[0].style.left.slice(0,-2)) , parseFloat(snake[0].style.top.slice(0,-2)));
+                   snakeBait(parseFloat(snake[0].style.left.slice(0,-2)) , parseFloat(snake[0].style.top.slice(0,-2)));
+}
+
+,20)
+
+}
+
+
+ function touchOrNot(p , q)
+
+ {
+   
+
+ 	if(p > maxWidth)
+
+ 	{
+ 		//snake[0].style.left = 0;
+
+ 		alert.innerHTML = "<h1> GAME OVER </h1>";
+ 		clearInterval(number);
+ 	}
+
+ 	if(p < 0)
+ 	{
+ 		//snake[0].style.left = maxWidth + "px";
+ 		alert.innerHTML = "<h1> GAME OVER </h1>" ;
+ 		clearInterval(number);
+
+ 		 	}
+ 	 	if(q > maxHeight)
+
+ 	{
+ 		//snake[0].style.top = 0;
+ 		alert.innerHTML = "<h1> GAME OVER </h1>";
+ 		clearInterval(number);
+ 	}
+
+ 	if(q < 0)
+ 	{
+ 		//snake[0].style.top = maxHeight + "px";
+ 		alert.innerHTML = "<h1> GAME OVER </h1>";
+ 		clearInterval(number);
+ 	}
+ }
+
+
+function snakeBait(p,q)
+
+{
+
+   var mod1 = p - parseFloat(bait.style.left.slice(0,-2));
+
+   if (mod1 < 0)
+   {
+   	mod1 = -1 * mod1 ;
+   }
+
+   var mod2 = q - parseFloat(bait.style.top.slice(0,-2));
+
+   if (mod2 < 0)
+   {
+   	mod2 = -1 * mod2 ;
+   }
+
+   console.log(mod1 , mod2);
+
+
+  if((mod1 < 20) && (mod2 < 20 ))
+
+  {
+         baitMove();
+         addDiv();
+  }
+}
+
+
+function addDiv()
+{
+	var div = document.createElement('div');
+         
+          div.className = 'snake';
+
+          document.body.appendChild(div);
+
+          div.style["background-color"] = "red";
+}
+
+
+  window.addEventListener('keydown' , keyMove );
+
+
+
+
+	
+
+
+
+
+	
+
+	
+
+
+</script>
+
+</body>
+</html>
